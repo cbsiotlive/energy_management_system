@@ -49,98 +49,180 @@ $(function () {
 
 });
 //-------------------------------------------------------------------------
-const urln = "http://cbsiot.live/utkarsh/api.php";
+
+ document.getElementById('inputState').addEventListener('change', function () {
+        // Get the selected option value
+        var selectedOption = this.value;
+
+        // Update the card text based on the selected option
+        document.getElementById('Airdata').style.display = (selectedOption === 'Air data') ? 'block' : 'none';
+        document.getElementById('Weather').style.display = (selectedOption === 'Weather data') ? 'block' : 'none';
+    });
+
+//-------------------------------------------------------------------------
+const urln = "//cbsiot.live/utkarsh/api.php";
 function fetchDataAndRefreshChart() {
-  const requestData = {
-    "operation": "read",
-    "data": "aqms"
-  };
+const requestData = {
+  "operation": "read",
+  "data": "aqms"
+};
 
-  // Fetch the data from the URL
-  fetch(urln, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(requestData)
+// Fetch the data from the URL
+fetch(urln, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(requestData)
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then(responseData => {
-      if (Array.isArray(responseData) && responseData.length > 0) {
-        const lastData = responseData[responseData.length - 1];
+  .then(responseData => {
+    if (Array.isArray(responseData) && responseData.length > 0) {
+      const lastData = responseData[responseData.length - 1];
 
-        // Define default values or handle missing properties gracefully
-        const so2Value = lastData.so2 !== undefined ? lastData.so2 : 0;
-        const no2Value = lastData.no2 !== undefined ? lastData.no2 : 0;
-        const noValue = lastData.no !== undefined ? lastData.no : 0;
-        const coValue = lastData.co !== undefined ? lastData.co : 0;
-        const o3Value = lastData.o3 !== undefined ? lastData.o3 : 0;
-        const pm2_5Value = lastData.pm2_5 !== undefined ? lastData.pm2_5 : 0;
-        const pm10Value = lastData.pm10 !== undefined ? lastData.pm10 : 0;
-        const nh3Value = lastData.nh3 !== undefined ? lastData.nh3 : 0;
+      // Define default values or handle missing properties gracefully
+      const so2Value = lastData.so2 !== undefined ? lastData.so2 : 0;
+      const no2Value = lastData.no2 !== undefined ? lastData.no2 : 0;
+      const noValue = lastData.no !== undefined ? lastData.no : 0;
+      const coValue = lastData.co !== undefined ? lastData.co : 0;
+      const o3Value = lastData.o3 !== undefined ? lastData.o3 : 0;
+      const pm2_5Value = lastData.pm2_5 !== undefined ? lastData.pm2_5 : 0;
+      const pm10Value = lastData.pm10 !== undefined ? lastData.pm10 : 0;
+      const nh3Value = lastData.nh3 !== undefined ? lastData.nh3 : 0;
+
+      am4core.ready(function () {
+        am4core.useTheme(am4themes_animated);
+        var chart = am4core.create("chartdiv", am4charts.XYChart);
+        chart.hiddenState.properties.opacity = 0;
+        chart.data = [
+          {
+            country: "SO2",
+            visits: so2Value
+          },
+          {
+            country: "NO2",
+            visits: no2Value
+          },
+        //   {
+        //     country: "NO",
+        //     visits: noValue
+        //   },
+          {
+            country: "CO",
+            visits: coValue
+          },
+          {
+            country: "O3",
+            visits: o3Value
+          },
+          {
+            country: "PM2_5",
+            visits: pm2_5Value
+          },
+          {
+            country: "PM10",
+            visits: pm10Value
+          },
+        //   {
+        //     country: "NH3",
+        //     visits: nh3Value
+        //   },
+          
+        ];
+
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.dataFields.category = "country";
+        categoryAxis.renderer.minGridDistance = 40;
+        categoryAxis.fontSize = 11;
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.min = 0;
+        valueAxis.max = 1200;
+        valueAxis.strictMinMax = true;
+        valueAxis.renderer.minGridDistance = 30;
+
+        var axisBreak = valueAxis.axisBreaks.create();
+        axisBreak.startValue = 2100;
+        axisBreak.endValue = 22900;
 
 
+        var d = (axisBreak.endValue - axisBreak.startValue) / (valueAxis.max - valueAxis.min);
+        axisBreak.breakSize = 0.05 * (1 - d) / d;
 
-        var chart = AmCharts.makeChart("chartdiv", {
-          "type": "serial",
-          "theme": "light",
-          "dataProvider": [{
-            "month": "so2",
-            "visits": so2Value
-          }, {
-            "month": "no2",
-            "visits": no2Value
-          }, {
-            "month": "no",
-            "visits": noValue
-          }, {
-            "month": "co",
-            "visits": coValue
-          }, {
-            "month": "o3",
-            "visits": o3Value
-          }, {
-            "month": "pm2_5",
-            "visits": pm2_5Value
-          }, {
-            "month": "pm10",
-            "visits": pm10Value
-          }, {
-            "month": "nh3",
-            "visits": nh3Value
-          }],
-          "graphs": [{
-            "fillAlphas": 0.9,
-            "lineAlpha": 0.2,
-            "type": "column",
-            "valueField": "visits"
-          }],
-          "categoryField": "month",
-          "valueAxes": [{
-            "minimum": 0
-          }]
+        var hoverState = axisBreak.states.create("hover");
+        hoverState.properties.breakSize = 1;
+        hoverState.properties.opacity = 0.1;
+        hoverState.transitionDuration = 1500;
+
+        axisBreak.defaultState.transitionDuration = 1000;
+
+
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.categoryX = "country";
+        series.dataFields.valueY = "visits";
+        series.columns.template.tooltipText = "{valueY.value}";
+        series.columns.template.tooltipY = 0;
+        series.columns.template.strokeOpacity = 0;
+
+        series.columns.template.adapter.add("fill", function (fill, target) {
+          return chart.colors.getIndex(target.dataItem.index);
         });
 
-
-
-      } else {
-        console.error("No data or empty array received from the server");
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+      });
+    } else {
+      console.error("No data or empty array received from the server");
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 }
 
 fetchDataAndRefreshChart();
-setInterval(fetchDataAndRefreshChart, 300000);
+setInterval(fetchDataAndRefreshChart,300000);
+//-------------------------------------------------------------------------
+  // Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
+    const apiUrlda = 'https://api.openweathermap.org/data/2.5/weather?lat=23.21164844388676&lon=72.64130812525333&appid=5bda7be1f4da2547c2b55d813d6da263';
+
+    // Function to update HTML content with data
+    function updateHtmlContent(data) {
+        // Check if data and main property exist
+        if (data && data.main) {
+            // Extract values
+            const humidity = data.main.humidity;
+            const temp = data.main.temp-272.00999999999999;
+            const pressure = data.main.pressure;
+
+            // Update HTML content 120000000000005
+            document.getElementById('humidity').textContent = humidity +'%';
+            document.getElementById('temperature').textContent = temp +'°C';
+            document.getElementById('pressure').textContent = pressure +'hpa';
+        } else {
+            // Handle the case where the expected properties are not available
+            console.error('Error: Invalid or missing data structure.');
+        }
+    }
+
+    // Fetch data from the OpenWeatherMap API
+    fetch(apiUrlda)
+        .then(response => response.json())
+        .then(data => {
+            // Update HTML content with data
+            updateHtmlContent(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+        
+
+//------------------------------------------------------------------------
+
 //  --------------------- Solar battery------------------------
-const urlb = "http://cbsiot.live/utkarsh/api.php";
+const urlb = "//cbsiot.live/utkarsh/api.php";
 function fetchDataAndRefreshbattery() {
   const datab = {
     "operation": "read",
@@ -212,7 +294,7 @@ function fetchDataAndRefreshbattery() {
 // Fetch data and refresh at regular intervals (e.g., every 2000 ms)
 setInterval(fetchDataAndRefreshbattery, 2000);
 //---------------------power status------------------------------
-const urlps = "http://cbsiot.live/utkarsh/api.php";
+const urlps = "//cbsiot.live/utkarsh/api.php";
 function fetchDataAndRefreshpowerstatus() {
   const dataps = {
     "operation": "read",
@@ -273,7 +355,7 @@ function fetchDataAndRefreshpowerstatus() {
 setInterval(fetchDataAndRefreshpowerstatus, 2000);
 //---------------------power status------------------------------
 //  --------------------- Solar battery end------------------------
-const urly = "http://cbsiot.live/utkarsh/api.php";
+const urly = "//cbsiot.live/utkarsh/api.php";
 const datay = {
   "operation": "read",
   "data": "energy"
@@ -395,7 +477,7 @@ fetch(urly, {
 
           setInterval(() => {
 
-            const urly = "http://cbsiot.live/utkarsh/api.php";
+            const urly = "//cbsiot.live/utkarsh/api.php";
             const datay = {
               "operation": "read",
               "data": "energy"
@@ -458,7 +540,7 @@ fetch(urly, {
 
 
 // -----------------------------meter two----------------------------------
-const urlxp = "http://cbsiot.live/utkarsh/api.php";
+const urlxp = "//cbsiot.live/utkarsh/api.php";
 const dataxp = {
   "operation": "read",
   "data": "energy"
@@ -574,7 +656,7 @@ fetch(urlxp, {
           handDataItem2.get("tick").set("visible", false);
 
           setInterval(() => {
-            const urlxp = "http://cbsiot.live/utkarsh/api.php";
+            const urlxp = "//cbsiot.live/utkarsh/api.php";
             const dataxp = {
               "operation": "read",
               "data": "energy"
@@ -632,7 +714,7 @@ fetch(urlxp, {
     console.error('Error:', error);
   });
 // ------------------------------------meter 3-----------------------------
-const urlz = "http://cbsiot.live/utkarsh/api.php";
+const urlz = "//cbsiot.live/utkarsh/api.php";
 const dataz = {
   "operation": "read",
   "data": "energy"
@@ -753,7 +835,7 @@ fetch(urlz, {
           handDataItem3.get("tick").set("visible", false);
 
           setInterval(() => {
-            const urlz = "http://cbsiot.live/utkarsh/api.php";
+            const urlz = "//cbsiot.live/utkarsh/api.php";
             const dataz = {
               "operation": "read",
               "data": "energy"
@@ -819,7 +901,7 @@ const requestDatal = {
 };
 
 // Make an HTTP POST request to your API endpoint
-fetch('http://cbsiot.live/utkarsh/api.php', {
+fetch('//cbsiot.live/utkarsh/api.php', {
   method: 'POST',
   body: JSON.stringify(requestDatal),
   headers: {
@@ -890,41 +972,43 @@ removeButtonall.addEventListener("click", function () {
   divToRemoveall.remove();
 });
 //-------------------main body div end--------------------------------
-
+  
 function toggleTheme() {
-  const body = document.body;
+    const body = document.body;
 
-  body.classList.toggle('dark-theme');
-  const isDarkTheme = body.classList.contains('dark-theme');
-  localStorage.setItem('dark-theme', isDarkTheme);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const body = document.body;
-  const isDarkTheme = localStorage.getItem('dark-theme') === 'true';
-  if (isDarkTheme) {
-    body.classList.add('dark-theme');
+    body.classList.toggle('dark-theme');
+    const isDarkTheme = body.classList.contains('dark-theme');
+    localStorage.setItem('dark-theme', isDarkTheme);
   }
-});
-//-------------------map--------------------------------
-var lat = 22.4805682;
-var lng = 88.3724835;
-var mymap = L.map('map').setView([lat, lng], 15);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-}).addTo(mymap);
+  document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    const isDarkTheme = localStorage.getItem('dark-theme') === 'true';
+    if (isDarkTheme) {
+      body.classList.add('dark-theme');
+    }
+  });
+  //-------------------map--------------------------------
+  
+//   23.21164844388676&lon=72.64130812525333
+        var lat = 23.21164844388676;
+        var lng = 72.64130812525333;
+        var mymap = L.map('map').setView([lat, lng], 15);
 
-// Create a custom icon using the provided image
-var customIcon = L.icon({
-  iconUrl: 'https://www.clipartmax.com/png/full/360-3607480_lamppost-free-icon-street-light-icon-png.png',
-  iconSize: [62, 62], // Adjust the size as needed
-  iconAnchor: [16, 16], // Adjust the anchor point if necessary
-  popupAnchor: [0, -16] // Adjust the popup anchor point if necessary
-});
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(mymap);
 
-// Add a marker with the custom icon
-var marker = L.marker([lat, lng], { icon: customIcon }).addTo(mymap);
+        // Create a custom icon using the provided image
+        var customIcon = L.icon({
+            iconUrl: 'https://www.clipartmax.com/png/full/360-3607480_lamppost-free-icon-street-light-icon-png.png',
+            iconSize: [62, 62], // Adjust the size as needed
+            iconAnchor: [16, 16], // Adjust the anchor point if necessary
+            popupAnchor: [0, -16] // Adjust the popup anchor point if necessary
+        });
 
-// Optional: You can add a popup to the marker
-marker.bindPopup("<b>Your Location</b>").openPopup();
+        // Add a marker with the custom icon
+        var marker = L.marker([lat, lng], { icon: customIcon }).addTo(mymap);
+
+        // Optional: You can add a popup to the marker
+        marker.bindPopup("<b>Your Location</b>").openPopup();

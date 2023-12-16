@@ -10,7 +10,7 @@ function toggleSwitch() {
 }
 
 function sendSwitchState(isSwitchOn) {
-  const apiUrl = "http://cbsiot.live/utkarsh/light.php";
+  const apiUrl = "//cbsiot.live/utkarsh/light.php";
   const requestData = {
     "light": "l1",
     "type": "update",
@@ -37,7 +37,7 @@ function sendSwitchState(isSwitchOn) {
     });
 }
 toggleButton.addEventListener("click", toggleSwitch);
-const urlon = "http://cbsiot.live/utkarsh/api.php";
+const urlon = "//cbsiot.live/utkarsh/api.php";
 function fetchDataAndRefresh() {
   const dataon = {
     "operation": "read",
@@ -92,7 +92,7 @@ function toggle2() {
 }
 
 function sendSwitch(isSwitch) {
-  const api = "http://cbsiot.live/utkarsh/light.php";
+  const api = "//cbsiot.live/utkarsh/light.php";
   const request = {
     "light": "l2",
     "type": "update",
@@ -121,7 +121,7 @@ function sendSwitch(isSwitch) {
 toggle.addEventListener("click", toggle2);
 
 
-const urlon2 = "http://cbsiot.live/utkarsh/api.php";
+const urlon2 = "//cbsiot.live/utkarsh/api.php";
 function fetchDataAndRefresh2() {
   const dataon2 = {
     "operation": "read",
@@ -183,7 +183,7 @@ function toggleSwitch3() {
 }
 
 function sendSwitch3(isSwitch3) {
-  const apiUrl3 = "http://cbsiot.live/utkarsh/light.php";
+  const apiUrl3 = "//cbsiot.live/utkarsh/light.php";
   const requestData3 = {
     "light": "l3",
     "type": "update",
@@ -212,7 +212,7 @@ function sendSwitch3(isSwitch3) {
 
 toggleButton3.addEventListener("click", toggleSwitch3);
 
-const urlp3 = "http://cbsiot.live/utkarsh/api.php";
+const urlp3 = "//cbsiot.live/utkarsh/api.php";
 
 function fetchDataAndRefreshpowerstatus() {
   const dataps = {
@@ -286,7 +286,7 @@ function toggleSwitch4() {
 }
 
 function sendSwitch4(isSwitch4) {
-  const apiUrl4 = "http://cbsiot.live/utkarsh/light.php";
+  const apiUrl4 = "//cbsiot.live/utkarsh/light.php";
   const requestData4 = {
     "light": "l4",
     "type": "update",
@@ -315,7 +315,7 @@ function sendSwitch4(isSwitch4) {
 
 toggleButton4.addEventListener("click", toggleSwitch4);
 
-const urlp4 = "http://cbsiot.live/utkarsh/api.php";
+const urlp4 = "//cbsiot.live/utkarsh/api.php";
 
 function fetchDataAndRefreshPowerStatus4() {
   const dataPower4 = {
@@ -385,7 +385,7 @@ function toggleSwitch5() {
 }
 
 function sendSwitch5(isSwitch5) {
-  const apiUrl5 = "http://cbsiot.live/utkarsh/light.php";
+  const apiUrl5 = "//cbsiot.live/utkarsh/light.php";
   const requestData5 = {
     "light": "l5",
     "type": "update",
@@ -414,7 +414,7 @@ function sendSwitch5(isSwitch5) {
 
 toggleButton5.addEventListener("click", toggleSwitch5);
 
-const urlp5 = "http://cbsiot.live/utkarsh/api.php";
+const urlp5 = "//cbsiot.live/utkarsh/api.php";
 
 function fetchDataAndRefreshPowerStatus5() {
   const dataPower5 = {
@@ -483,7 +483,7 @@ function toggleSwitch6() {
 }
 
 function sendSwitch6(isSwitch6) {
-  const apiUrl6 = "http://cbsiot.live/utkarsh/light.php";
+  const apiUrl6 = "//cbsiot.live/utkarsh/light.php";
   const requestData6 = {
     "light": "l6",
     "type": "update",
@@ -512,7 +512,7 @@ function sendSwitch6(isSwitch6) {
 
 toggleButton6.addEventListener("click", toggleSwitch6);
 
-const urlp6 = "http://cbsiot.live/utkarsh/api.php";
+const urlp6 = "//cbsiot.live/utkarsh/api.php";
 
 function fetchDataAndRefreshPowerStatus6() {
   const dataPower6 = {

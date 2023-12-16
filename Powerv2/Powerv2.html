@@ -89,20 +89,20 @@
                         <span class="rad-sidebar-item">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-bar-chart-o">
-                            <span class="icon-bg rad-bg-danger"></span>
-                        </i>
-                        <span class="rad-sidebar-item">Ticket status</span>
-                    </a>
-                </li>
+                <!--<li>-->
+                <!--    <a href="#">-->
+                <!--        <i class="fa fa-bar-chart-o">-->
+                <!--            <span class="icon-bg rad-bg-danger"></span>-->
+                <!--        </i>-->
+                <!--        <span class="rad-sidebar-item">Ticket status</span>-->
+                <!--    </a>-->
+                <!--</li>-->
                 <li><a href="#" class="snooz"><i class="fa fa-line-chart"><span
                                 class="icon-bg rad-bg-primary"></span></i><span class="rad-sidebar-item">Call
                             trends</span></a></li>
-                <li><a href="#" class="done"><i class="fa fa-area-chart"><span
-                                class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">Heat
-                            maps</span></a></li>
+                <!--<li><a href="#" class="done"><i class="fa fa-area-chart"><span-->
+                <!--                class="icon-bg rad-bg-warning"></span></i><span class="rad-sidebar-item">Heat-->
+                <!--            maps</span></a></li>-->
                 <li><a href="#"><i class="fa fa-wrench"><span class="icon-bg rad-bg-violet"></span></i><span
                             class="rad-sidebar-item">Settings</span></a></li>
             </ul>
@@ -119,10 +119,10 @@
                     <div class="card light-box">
                         <div class="card-title rad-bg-warning">
                             <h5 class="p-2">Control The Lights
-                                <a href="/utkarsh/Power_MS/powerv2/light.html" class="toggle-big-div"
-                                    style="float: right;">
-                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                </a>
+                                <!--<a href="/utkarsh/Power_MS/powerv2/light.html" class="toggle-big-div"-->
+                                <!--    style="float: right;">-->
+                                <!--    <i class="fa fa-arrows-alt" aria-hidden="true"></i>-->
+                                <!--</a>-->
                             </h5>
                         </div>
                         <div class="card-text">
@@ -194,17 +194,45 @@
                     </div>
                     <!---------------- light div end-------------------- -->
                     <!-- -----------------air quality data---------------------------- -->
+                    
+                    
                     <div class="card light-box">
-                        <div class="card-title rad-bg-warning">
-                            <h5 class="p-2">Current Air Quality Data
-                                <a href="/utkarsh/Power_MS/powerv2/graph.html" class="toggle-big-div"
-                                    style="float: right;">
-                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                </a>
-                            </h5>
-                        </div>
-                        <div id="chartdiv" class="chartdiv"></div>
-                    </div>
+        <div class="card-title rad-bg-warning" >
+            <h5 class="p-0">Air Quality Data
+                <div class="form-group " style="float: right;">
+                    <select id="inputState" class="form-control">
+                        <option selected>Air data</option>
+                        <option>Weather data</option>
+                    </select>
+                </div>
+            </h5>
+        </div>
+        <div class="card-text" id="Airdata">
+            <div id="chartdiv" class="chartdiv"></div>
+            
+            
+        </div>
+       <div class="card-text" id="Weather" style="display: none;">
+           
+        
+            <div class="showval ml-4 rad-bg-warning">
+                <p style="text-align: center;"><b>Humidity</b></p>
+                <p id="humidity" style="text-align: center;">Loading...</p>
+            </div>
+            <div class="showval ml-4 mt-4 rad-bg-warning">
+                <p style="text-align: center;"><b>Temperature</b></p>
+                <p id="temperature" style="text-align: center;">Loading...</p>
+            </div>
+            <div class="showval ml-4 mt-4 rad-bg-warning">
+                <p style="text-align: center;"><b>Pressure</b></p>
+                <p id="pressure" style="text-align: center;">Loading...</p>
+            </div>
+          
+    </div>
+
+    </div>
+            
+                    
                     <!-- ------------------------------air quality data end------------------------------------- -->
 
 
@@ -214,10 +242,10 @@
 
                         <div class="card-title rad-bg-warning">
                             <h5 class="p-2">Battery
-                                <a href="/utkarsh/Power_MS/powerv2/battery.html" class="toggle-big-div"
-                                    style="float: right;">
-                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                </a>
+                                <!--<a href="/utkarsh/Power_MS/powerv2/battery.html" class="toggle-big-div"-->
+                                <!--    style="float: right;">-->
+                                <!--    <i class="fa fa-arrows-alt" aria-hidden="true"></i>-->
+                                <!--</a>-->
                             </h5>
                         </div>
 
@@ -263,10 +291,10 @@
                     <div class="card light-box">
                         <div class="card-title rad-bg-warning">
                             <h5 class="p-2">Current
-                                <a href="/utkarsh/Power_MS/powerv2/current.html" class="toggle-big-div"
-                                    style="float: right;">
-                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                </a>
+                                <!--<a href="/utkarsh/Power_MS/powerv2/current.html" class="toggle-big-div"-->
+                                <!--    style="float: right;">-->
+                                <!--    <i class="fa fa-arrows-alt" aria-hidden="true"></i>-->
+                                <!--</a>-->
                             </h5>
                         </div>
                         <div id="chartdiv-meter-one" class="chartdiv-meter-one"></div>
@@ -276,10 +304,10 @@
                     <div class="card light-box">
                         <div class="card-title rad-bg-warning">
                             <h5 class="p-2">Voltage
-                                <a href="/utkarsh/Power_MS/powerv2/voltage.html" class="toggle-big-div"
-                                    style="float: right;">
-                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                </a>
+                                <!--<a href="/utkarsh/Power_MS/powerv2/voltage.html" class="toggle-big-div"-->
+                                <!--    style="float: right;">-->
+                                <!--    <i class="fa fa-arrows-alt" aria-hidden="true"></i>-->
+                                <!--</a>-->
                             </h5>
                         </div>
                         <div id="chartdiv-meter-two" class="chartdiv-meter-two"></div>
@@ -289,10 +317,10 @@
                     <div class="card light-box">
                         <div class="card-title rad-bg-warning">
                             <h5 class="p-2">Power
-                                <a href="/utkarsh/Power_MS/powerv2/powerMeter.html" class="toggle-big-div"
-                                    style="float: right;">
-                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                </a>
+                                <!--<a href="/utkarsh/Power_MS/powerv2/powerMeter.html" class="toggle-big-div"-->
+                                <!--    style="float: right;">-->
+                                <!--    <i class="fa fa-arrows-alt" aria-hidden="true"></i>-->
+                                <!--</a>-->
                             </h5>
                         </div>
                         <div id="chartdiv-meter-three" class="chartdiv-three"></div>
@@ -305,14 +333,15 @@
                 <div class="card light-box" style="margin-top: 20px;">
                     <div class="card-title rad-bg-warning">
                         <h5 class="p-2">Map
-                            <a href="/utkarsh/Power_MS/powerv2/map.html" class="toggle-big-div" style="float: right;">
-                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                            </a>
+                            <!--<a href="/utkarsh/Power_MS/powerv2/map.html" class="toggle-big-div" style="float: right;">-->
+                            <!--    <i class="fa fa-arrows-alt" aria-hidden="true"></i>-->
+                            <!--</a>-->
                         </h5>
                     </div>
                     <div id="map" style="height: 300px;"></div>
                 </div>
                 <!---------------- map end-------------------- -->
+                
             </div>
         </section>
     </main>
@@ -329,9 +358,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
-    <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
-    <script src="//www.amcharts.com/lib/3/serial.js"></script>
-    <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+   <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+   <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
     <script src="//cdn.amcharts.com/lib/5/index.js"></script>
     <script src="//cdn.amcharts.com/lib/5/xy.js"></script>
